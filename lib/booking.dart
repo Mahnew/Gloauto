@@ -5,7 +5,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart' show DateFormat;
-
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -15,17 +15,10 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'dooboolab flutter calendar',
       theme: new ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
-        // counter didn't reset back to zero; the application is not restarted.
+
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Flutter Calendar Carousel Example'),
+      home: new MyHomePage(title: 'Booking'),
     );
   }
 }
@@ -49,8 +42,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DateTime _currentDate = DateTime(2019, 2, 3);
-  DateTime _currentDate2 = DateTime(2019, 2, 3);
+  DateTime _currentDate = DateTime.now();
+  DateTime _currentDate2 = DateTime.now();
   String _currentMonth = '';
 //  List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
   static Widget _eventIcon = new Container(
@@ -68,17 +61,17 @@ class _MyHomePageState extends State<MyHomePage> {
     events: {
       new DateTime(2019, 2, 10): [
         new Event(
-          date: new DateTime(2019, 2, 10),
+          date: new DateTime(2019, 7, 20),
           title: 'Event 1',
           icon: _eventIcon,
         ),
         new Event(
-          date: new DateTime(2019, 2, 10),
+          date: new DateTime(2019, 7, 20),
           title: 'Event 2',
           icon: _eventIcon,
         ),
         new Event(
-          date: new DateTime(2019, 2, 10),
+          date: new DateTime(2019, 7, 20),
           title: 'Event 3',
           icon: _eventIcon,
         ),
@@ -94,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _markedDateMap.add(
         new DateTime(2019, 2, 25),
         new Event(
-          date: new DateTime(2019, 2, 25),
+          date: new DateTime(2019, 7, 20),
           title: 'Event 5',
           icon: _eventIcon,
         ));
@@ -102,24 +95,24 @@ class _MyHomePageState extends State<MyHomePage> {
     _markedDateMap.add(
         new DateTime(2019, 2, 10),
         new Event(
-          date: new DateTime(2019, 2, 10),
+          date: new DateTime(2019, 7, 20),
           title: 'Event 4',
           icon: _eventIcon,
         ));
 
-    _markedDateMap.addAll(new DateTime(2019, 2, 11), [
+    _markedDateMap.addAll(new DateTime(2019, 7, 20), [
       new Event(
-        date: new DateTime(2019, 2, 11),
+        date: new DateTime(2019, 7, 20),
         title: 'Event 1',
         icon: _eventIcon,
       ),
       new Event(
-        date: new DateTime(2019, 2, 11),
+        date: new DateTime(2019, 7, 20),
         title: 'Event 2',
         icon: _eventIcon,
       ),
       new Event(
-        date: new DateTime(2019, 2, 11),
+        date: new DateTime(2019, 7, 20),
         title: 'Event 3',
         icon: _eventIcon,
       ),
@@ -145,40 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     /// Example with custom icon
-    _calendarCarousel = CalendarCarousel<Event>(
-      onDayPressed: (DateTime date, List<Event> events) {
-        this.setState(() => _currentDate = date);
-        events.forEach((event) => print(event.title));
-      },
-      weekendTextStyle: TextStyle(
-        color: Colors.red,
-      ),
-      thisMonthDayBorderColor: Colors.grey,
-//          weekDays: null, /// for pass null when you do not want to render weekDays
-//          headerText: Container( /// Example for rendering custom header
-//            child: Text('Custom Header'),
-//          ),
-//          markedDates: _markedDate,
-      weekFormat: true,
-      markedDatesMap: _markedDateMap,
-      height: 200.0,
-      selectedDateTime: _currentDate2,
-//          daysHaveCircularBorder: false, /// null for not rendering any border, true for circular border, false for rectangular border
-      customGridViewPhysics: NeverScrollableScrollPhysics(),
-      markedDateShowIcon: true,
-      markedDateIconMaxShown: 2,
-      todayTextStyle: TextStyle(
-        color: Colors.blue,
-      ),
-      markedDateIconBuilder: (event) {
-        return event.icon;
-      },
-      todayBorderColor: Colors.green,
-      markedDateMoreShowTotal:
-      false, // null for not showing hidden events indicator
-//          markedDateIconMargin: 9,
-//          markedDateIconOffset: 3,
-    );
+
 
     /// Example Calendar Carousel without header and custom prev & next button
     _calendarCarouselNoHeader = CalendarCarousel<Event>(
@@ -281,6 +241,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ), //
             ],
           ),
-        ));
+        ),
+      bottomNavigationBar: CurvedNavigationBar(
+      backgroundColor: Colors.blueAccent,
+      items: <Widget>[
+        Icon(Icons.person, size: 15),
+        Icon(Icons.calendar_today, size: 15),
+        Icon(Icons.drive_eta, size: 15),
+        Icon(Icons.local_phone, size: 15),
+      ],
+      onTap: (index) {
+        //Handle button tap
+      },
+    )
+    );
   }
 }
